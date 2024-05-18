@@ -1,0 +1,82 @@
+<div class="primary-container" *ngIf="menu_tool == 1">
+    <div class="main" >
+        <div class="title">
+            Dashboard
+        </div>
+        <div class="content">
+            <app-tieldmap style="width: 100%; height: 100%;" > </app-tieldmap>
+     
+        </div>
+    </div>
+    <div class="menu">
+        <div class="toggle-button-menu">
+            <img src="./assets/graphs/expand.svg" alt="">
+        </div>
+        <div class="menu-content">
+            <div class="content-type-graphs">
+                <div class="box-graph" (click)="set_menu_tool = 2">
+                    <img src="./assets/graphs/line_chart.svg" alt="line chart" class="image_contet">
+                    <div class="title-content">
+                        <div class="title">Grafica linear</div>
+                    </div>
+                </div>
+                <div class="box-graph disabled">
+                    <img src="./assets/graphs/bar_chart.svg" alt="line chart" class="image_contet">
+                    <div class="title-content">
+                        <div class="title">Grafica de barra</div>
+                    </div>
+                </div>
+                <div class="box-graph disabled">
+                    <img src="./assets/graphs/traffic.svg" alt="line chart" class="image_contet">
+                    <div class="title-content">
+                        <div class="title">Semaforo</div>
+                    </div>
+                </div>
+                <div class="box-graph disabled">
+                    <img src="./assets/graphs/gauge.svg" alt="line chart" class="image_contet">
+                    <div class="title-content">
+                        <div class="title">Gauge</div>
+                    </div>
+                </div>
+                <div class="box-graph disabled">
+                    <img src="./assets/graphs/text.svg" alt="line chart" class="image_contet">
+                    <div class="title-content">
+                        <div class="title">Texto</div>
+                    </div>
+                </div>
+
+                <div class="box-graph" (click)="set_menu_tool = 3">
+                    <img src="./assets/graphs/switch.svg" alt="line chart"  class="image_contet">
+                    <div class="title-content">
+                        <div class="title">Boton simple</div>
+                    </div>
+                </div>
+                <div class="box-graph disabled">
+                    <img src="./assets/graphs/alert.svg" alt="line chart" class="image_contet">
+                    <div class="title-content">
+                        <div class="title">Alerta</div>
+                    </div>
+                </div>
+                <div class="box-graph disabled">
+                    <img src="./assets/graphs/indicator.svg" alt="line chart" class="image_contet">
+                    <div class="title-content">
+                        <div class="title">Indicador</div>
+                    </div>
+                </div>
+                <div class="box-graph disabled">
+                    <img src="./assets/graphs/input.svg" alt="line chart" class="image_contet">
+                    <div class="title-content">
+                        <div class="title">Entrada de texto</div>
+                    </div>
+                </div>
+                <div class="separador" style="margin-bottom: 50px; width: 100%; "></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="primary-container" *ngIf="menu_tool == 2">
+    <app-configure-linear-graph></app-configure-linear-graph>
+</div>
+<div class="primary-container" *ngIf="menu_tool == 3">
+    <app-configure-simple-button></app-configure-simple-button>
+</div>

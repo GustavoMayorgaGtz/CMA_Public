@@ -1,0 +1,107 @@
+<div class="primary">
+    <nav>
+        <div class="btn-regresar" (click)="cerrar()">Regresar</div>
+        <div class="title">{{title}}</div>
+    </nav>
+    <div class="chart-container">
+        <canvas baseChart #graph1 [ngStyle]="obtenerObjeto(graph1)" *ngIf="linear1" [type]="'line'"
+            [data]="linear1.lineChartData" [options]="linear1.lineChartOptions" [legend]="true">
+        </canvas>
+    </div>
+    <div class="information">
+        <div class="container-table">
+            <div class="information-table">
+                <img src="./assets/info.png" class="info-ico"> La tabla presenta los datos recopilados a lo largo del periodo establecido desde la creación del gráfico lineal.
+            </div>
+            <table>
+                <tr class="head">
+                    <th>Fecha de registro</th>
+                    <th>Valor</th>
+                </tr>
+                <tr *ngFor="let valor of blobdataInformation; let i = index">
+                    <td class="columna">
+                        {{valor.fecha}}
+                    </td>
+                    <td class="columna">
+                        {{valor.valor}}
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="menu">
+            <!-- <p class="title">Muestreo</p> -->
+            <div class="information-table">
+                <img src="./assets/info.png" class="info-ico"> Selecciona los datos que quieres visualizar y descarga los datos en excel.
+            </div>
+            <div class="campo">
+                <div class="subtitle">
+                    Muestreo de datos
+                </div>
+                <div class="content">
+                    <div class="input-muestreo">
+                        <input type="range" min="10" max="2000" step="10" #range value={{samplingNumber}} (change)="grafica_linear.setMuestreo(range.value)">
+                        <div class="bottom">
+                            <div class="min">0</div>
+                            <div class="center">{{range.value}}</div>
+                            <div class="max">2000</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="line"></div>
+            <div class="campo">
+                <div class="subtitle">
+                    Agrupar datos por fecha
+                </div>
+                <div class="content">
+                    <div class="input-groupby">
+                        <div class="top">
+                            <div class="content-information">
+                                Muestra los datos tal y como se registraron en el espacio virtual.
+                            </div>
+                        </div>
+                        <div class="bottom">
+                            <div class="option" *ngIf="groupByDataOption != 1" (click)="groupByData(1)">
+                                Normal
+                            </div>
+                            <div class="option-mark" *ngIf="groupByDataOption == 1">
+                                Normal
+                            </div>
+                            <div class="option" *ngIf="groupByDataOption != 2" (click)="groupByData(2)">
+                                Minutos
+                            </div>
+                            <div class="option-mark" *ngIf="groupByDataOption == 2">
+                                Minutos
+                            </div>
+                            <div class="option-mark" *ngIf="groupByDataOption == 3">
+                                Hora
+                            </div>
+                            <div class="option" *ngIf="groupByDataOption != 3" (click)="groupByData(3)">
+                                Hora
+                            </div>
+                            <div class="option-mark" *ngIf="groupByDataOption == 4">
+                                Dia
+                            </div>
+                            <div class="option" *ngIf="groupByDataOption != 4" (click)="groupByData(4)">
+                                Dia
+                            </div>
+                            <div class="option-mark" *ngIf="groupByDataOption == 5">
+                                Mes
+                            </div>
+                            <div class="option" *ngIf="groupByDataOption != 5" (click)="groupByData(5)">
+                                Mes
+                            </div>
+                            <div class="option-mark" *ngIf="groupByDataOption == 6">
+                                Año
+                            </div>
+                            <div class="option" *ngIf="groupByDataOption != 6" (click)="groupByData(6)">
+                                Año
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,343 @@
+<div class="main">
+    <div class="nav">
+        <div class="opcion-nav" *ngIf="menu===1" (click)="changeStatusMenu(2)">
+            <img src="./assets/add.png" alt="add">
+            Agregar variable
+        </div>
+        <div class="opcion-nav" *ngIf="menu===2" (click)="changeStatusMenu(1)">
+            <img src="./assets/back.png" alt="add">
+            Regresar
+        </div>
+        <div class="opcion-nav" *ngIf="menu===1" (click)="refreshData()">
+            <img src="./assets/refresh.png" alt="refresh">
+            Refrescar
+        </div>
+        <div class="opcion-nav">
+            <img src="./assets/info.png" alt="info">
+            Informacion
+        </div>
+    </div>
+    <!-- ------------------------------------------------------------------------------------------------------- -->
+    <div class="opciones" *ngIf="menu === 1">
+        <div class="opciones-title">
+            Busqueda y filtro de variables
+        </div>
+        <div class="search">
+            <input type="text" placeholder="Nombre de variable">
+            <div class="search-btn">
+                <img src="./assets/search.png" alt="search">
+            </div>
+
+        </div>
+        <select>
+            <option disabled selected>Selección por tipo de alerta</option>
+            <option>Variable json endpoint</option>
+            <option>Variable modbus</option>
+            <option>Variable de memoria</option>
+            <option>Variable CMA endpoint</option>
+        </select>
+
+    </div>
+    <div class="variables" *ngIf="menu === 1">
+        <span *ngIf="jsonVariables.length === 0 && modbusVariables.length === 0 && memoryVariables.length === 0 && variablesEndpoint.length === 0 "
+            style="width: 100%; height: 100%; display: flex; justify-content: center; margin-top: 15%;">No hay variables
+            creadas</span>
+        <div class="card-variable" *ngFor="let jsonVar of jsonVariables; let j = index">
+            <div class="header">
+                <div class="title">{{jsonVar.name}}</div>
+                <div class="type" style="color: rgb(227, 133, 17);">Json E</div>
+            </div>
+            <div class="value_var">
+                {{jsonVar.value}}
+            </div>
+        </div>
+       
+        <div class="card-variable" *ngFor="let modbusVar of modbusVariables; let j = index">
+            <div class="header">
+                <div class="title">{{modbusVar.name}}</div>
+                <div class="type" style="color: rgb(76, 156, 49);">Modbus</div>
+            </div>
+            <div class="value_var">
+                {{modbusVar.value[0]}}
+            </div>
+        </div>
+        <div class="card-variable" *ngFor="let memoryVar of memoryVariables; let j = index">
+            <div class="header">
+                <div class="title">{{memoryVar.name}}</div>
+                <div class="type" style="color: rgb(185, 152, 241);">Memory</div>
+            </div>
+            <div class="value_var">
+                {{memoryVar.expression}}
+            </div>
+            <div class="value_var">
+                {{memoryVar.result}}
+            </div>
+        </div>
+        <div class="card-variable-endpoint" *ngFor="let cma_endpoint of variablesEndpoint; let j = index">
+            <div class="header">
+                <div class="title">{{cma_endpoint.name}}</div>
+                <div class="type" style="color: rgb(49, 156, 156);">CMA Endpoint</div>
+            </div>
+            <div class="value_var">
+                <p>http://localhost:5000/cma_endpoint/insertValue<span style="color: rgb(0, 98, 255)">?</span><b>id_endpoint</b>={{cma_endpoint.id_endpoint}}<span style="color: rgb(0, 98, 255)">&</span><b>token</b>={{cma_endpoint.token}}<span style="color: rgb(0, 98, 255)">&</span><b>value</b>=Valor
+                <!-- {{cma_endpoint.description}} -->
+                <!-- {{modbusVar.value[0]}} -->
+            </div>
+        </div>
+    </div>
+    <!-- ------------------------------------------------------------------------------------------------------- -->
+    <div class="crearVariable" *ngIf="menu === 2">
+        <div class="informacion">
+            <div class="icono-informacion">
+                <img src="./assets/info.png" alt="icono de informacion">
+            </div>
+            <div class="content">
+                Obten datos de endpoints de tus servidores o conectate a tus PLC para crear variables en el sistema.
+            </div>
+        </div>
+        <hr>
+        <div class="menuVar">
+            <div class="options">
+                <div class="option" (click)="changeStatusTypeCreateVar(1)" *ngIf="menuTypeVar != 1">Json endpoint</div>
+                <div class="option selected" *ngIf="menuTypeVar === 1">Json Endpoint</div>
+                <div class="option" (click)="changeStatusTypeCreateVar(2)" *ngIf="menuTypeVar != 2">Modbus</div>
+                <div class="option selected" *ngIf="menuTypeVar === 2">Modbus</div>
+                <div class="option" (click)="changeStatusTypeCreateVar(3)" *ngIf="menuTypeVar != 3">De memoria</div>
+                <div class="option selected" *ngIf="menuTypeVar === 3">De memoria</div>
+                <div class="option" (click)="changeStatusTypeCreateVar(4)" *ngIf="menuTypeVar != 4">CMA endpoint</div>
+                <div class="option selected" *ngIf="menuTypeVar === 4">CMA Endpoint</div>
+            </div>
+            <div class="contentFormularioCreateVar" *ngIf="menuTypeVar === 1">
+                VARIABLE JSON ENDPOINT
+                <!-- Nombre de variable -->
+                <div class="campo">
+                    <label for="">Nombre de variable</label>
+                    <input type="text" #nombre>
+                </div>
+                <!-- URL y Metodo -->
+                <div class="campo" style="background-color:rgb(221, 215, 204); padding: 0px 5px;">
+                    <label for="">URL</label>
+                    <input #url type="text" (keyup)="jsonBuilder.clearData()">
+                    <label for="">Metodo</label>
+                    <select #metodo (change)="jsonBuilder.changeMethod(metodo.value)" (keyup)="jsonBuilder.clearData()">
+                        <option selected="true" disabled="disabled">METHOD</option>
+                        <option>GET</option>
+                        <option>POST</option>
+                        <option>PUT</option>
+                        <option>OPTIONS</option>
+                        <option>DELETE</option>
+                        <option>PATCH</option>
+                    </select>
+                    <div class="SEND_REQUEST"
+                        (click)="jsonBuilder.sendQuery(metodo.value, url, jsonBuilder.getObjectJsonEndpointVar(), nombre)">
+                        <img src="./assets/send (2).png" alt="send" class="send_img">
+                    </div>
+                </div>
+                <!-- Datos y seguridad -->
+                <div class="container-parameters">
+                    <div class="menu">
+                        <div class="options" (click)="jsonBuilder.parameters_Json_Constructor(1)">Seguridad</div>
+                        <div class="options" *ngIf="(metodo.value != 'METHOD' && metodo.value != 'GET')"
+                            (click)="jsonBuilder.parameters_Json_Constructor(0)">Body</div>
+                    </div>
+                    <div class="content">
+                        <!-- DATOS -->
+                        <div class="datos" *ngIf="showDatos">
+                            <div class="contenedor_datos" *ngIf="showDatos">
+                                <div class="campo-data">
+                                    <div class="data" *ngFor="let item of jsonBuilder.getBody_Query; let i = index">
+                                        <input type="text" class="key" placeholder="key" #key
+                                            (change)="jsonBuilder.body_query_changeKey(key.value, i)"
+                                            (keyup)="jsonBuilder.body_query_changeKey(key.value, i)"
+                                            (blur)="jsonBuilder.body_query_changeKey(key.value, i)">
+                                        <input type="text" class="data" placeholder="value" #value
+                                            (change)="jsonBuilder.body_query_changeValue(value.value, i)"
+                                            (keyup)="jsonBuilder.body_query_changeValue(value.value, i)"
+                                            (blur)="jsonBuilder.body_query_changeValue(value.value, i)">
+                                        <div class="container-img-quit" (click)="jsonBuilder.body_query_quitItem(i)">
+                                            <img src="./assets/close.png" alt="quit" class="quit">
+                                        </div>
+                                    </div>
+
+                                    <div class="addMore" (click)="jsonBuilder.body_query_addItem()">Añadir campo</div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- SEGURIDAD -->
+                        <div class="contenedor_seguridad" *ngIf="showSeguridad">
+                            <div class="campo">
+                                <label for="">Token</label>
+                                <input type="text" #token>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <!-- --------------------------------------------- -->
+                <br>
+                <br>
+                <div class="contenedor_variables" *ngIf="showSeleccion">
+                    Response
+                    <br>
+                    <hr>
+                    <div class="informacion">
+                        <div class="icono-informacion">
+                            <img src="./assets/info.png" alt="icono de informacion">
+                        </div>
+                        <div class="content" style="font-weight: normal;">
+                            Selecciona una llave para guardar el valor que tiene como el valor de la variable que vas a
+                            crear
+                        </div>
+                    </div>
+
+                    <div class="container-horizontal-campos">
+                        <div class="campo">
+                            <label for="">Keys</label>
+                            <input type="text" value={{jsonBuilder.getkeysArr}} #keys_father disabled>
+                        </div>
+                        <div class="campo">
+                            <label for="">Valor</label>
+                            <input type="text" value={{jsonBuilder.getValueJson}} disabled>
+                        </div>
+                        <div class="campo">
+                            <label for="">Llave</label>
+                            <input type="text"
+                                value={{jsonBuilder.getJsonFormatterArray[jsonBuilder.getidxKeySelected].name}}
+                                #key_json disabled>
+                        </div>
+                    </div>
+                    <div class="jsonFormatter">
+                        <pre style="font-weight: bold; color: rgb(29, 87, 222);"> {{"{"}}</pre>
+                        <div class="variable" *ngFor="let x of jsonBuilder.getJsonFormatterArray; let i = index">
+                            <pre *ngIf="x.name != '[' && x.name != ']' && x.name != '{' && x.name != '}'"
+                                (click)="jsonBuilder.getDirection(i, true)"><p [style.margin-left.px]="x.level * 30"><b style="color: rgb(73, 73, 73)" class="key_json">"{{x.name}}"</b> : {{(x.type != 'object')?x.value:''}} => <span style="color: rgb(49, 136, 211);">{{x.type}}</span></pre>
+                            <pre
+                                *ngIf="x.name == '{' || x.name == '}' || x.name == '[' || x.name == ']'"><p [style.margin-left.px]="x.level * 30"><b style="color: rgb(73, 73, 73)" class="key_json">{{x.name}}</b></pre>
+                        </div>
+                        <pre style="font-weight: bold; color: rgb(29, 87, 222);"> {{"}"}}</pre>
+                    </div>
+
+                </div>
+
+                <!-- --------------------------------------------- -->
+                <div class="btn-guardar" *ngIf="jsonBuilder.getkeysArr && jsonBuilder.getValueJson && nombre.value"
+                    (click)="jsonBuilder.saveVariable(nombre.value, url.value, metodo.value,  jsonBuilder.getObjectJsonEndpointVar(), jsonBuilder.getToken, Vars_names  )">
+                    Guardar variable
+                </div>
+                <!-- --------------------------------------------- -->
+            </div>
+            <div class="contentFormularioCreateVar" *ngIf="menuTypeVar === 2">
+                VARIABLE MODBUS
+                <hr>
+                <div class="campo">
+                    <label for="">Nombre de variable</label>
+                    <input type="text" #name>
+                </div>
+                <div class="campo">
+                    <label for="">IP PLC</label>
+                    <input type="text" #ip (keyup)="changeModbusInput()">
+                </div>
+                <div class="campo">
+                    <label for="">Puerto del PLC</label>
+                    <input type="number" value="502" #puerto (keyup)="changeModbusInput()">
+                </div>
+                <div class="campo">
+                    <label for="">No de registro</label>
+                    <input type="number" #no_registro (keyup)="changeModbusInput()">
+                </div>
+                <div class="campo">
+                    <label for="">Valor del registro</label>
+                    <input type="text" value={{modbus_connection_value}} disabled>
+                </div>
+
+                <br>
+                <br>
+                <div class="btn-guardar" style="background-color: rgb(174, 241, 152);"
+                    (click)="testModbusVar(name.value, ip.value, puerto.value, no_registro.value)">
+                    <span *ngIf="!modbus_connection_value">Probar conexion y obtener valor</span>
+                    <span *ngIf="modbus_connection_value">Guardar variable</span>
+                </div>
+            </div>
+            <!-- ---------------------------------------------------- -->
+            <div class="contentFormularioCreateVar" *ngIf="menuTypeVar === 3">
+                VARIABLE DE MEMORIA
+                <hr>
+                <div class="campo">
+                    <label for="nameMemory">Nombre de variable</label>
+                    <input type="text" id="nameMemory" name="nameMemory" #nameMemory>
+                </div>
+                <div class="agregarVariable">➕ Agregar variable</div>
+                <br>
+
+                <div class="regex">
+                    <textarea name="regex" id="regex" cols="30" rows="10" #regex></textarea>
+                    <div class="vars">
+                        <div class="title">
+                            Variables Json
+                        </div>
+                        <div class="variable" *ngFor="let json of jsonVariables; let idJsonVar = index"
+                            (click)="addVar(regex, json.name)">
+                            {{json.name}}
+                        </div>
+                    </div>
+                    <div class="vars">
+                        <div class="title">
+                            Variables Modbus
+                        </div>
+                        <div class="variable" *ngFor="let modbus of modbusVariables; let idModbusVar = index"
+                            (click)="addVar(regex, modbus.name)">
+                            {{modbus.name}}
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="btn-guardar" style="background-color: rgb(185, 152, 241);"
+                    (click)="guardarExpression(nameMemory.value, regex.value)">
+                    Guardar variable
+                </div>
+            </div>
+            <!-- ---------------------------------------------------- -->
+            <div class="contentFormularioCreateVar" *ngIf="menuTypeVar === 4">
+                CMA ENDPOINT
+                <hr>
+                <div class="create-cma-endpoint" *ngIf="modeCMA_ENPOINT_option === 1">
+                    <div class="campo">
+                        <label for="name_cma_endpoint">Nombre de variable</label>
+                        <input type="text" id="name_cma_endpoint" name="name_cma_endpoint" #name_cma_endpoint>
+                    </div>
+                    <br>
+                    <div class="campo">
+                        <label for="description_cma_endpoint">Descripcion del endopoint</label>
+                        <textarea type="text" id="description_cma_endpoint" name="description_cma_endpoint"
+                            #description_cma_endpoint>
+                    </textarea>
+                    </div>
+                    <br>
+                    <div class="btn-guardar" style="background-color: rgb(185, 152, 241);"
+                        (click)="createEndpointVar(name_cma_endpoint.value, description_cma_endpoint.value)">
+                        Guardar variable
+                    </div>
+                </div>
+                <div class="view-data-cma-endpoint" *ngIf="modeCMA_ENPOINT_option === 2">
+                    <div class="campo">
+                        <label for="name_cma_endpoint">Nombre de variable</label>
+                        <b>{{cma_endpoint_created.name}}</b>
+                    </div>
+                    <div class="campo">
+                        <label for="name_cma_endpoint">Descripcion</label>
+                        <b>{{cma_endpoint_created.description}}</b>
+                    </div>
+                    <div class="campo">
+                        <label for="name_cma_endpoint">Endpoint</label>
+                        <span [innerHTML]=cma_endpoint_created.url></span>
+                    </div>
+                    <div class="campo">
+                        <label for="name_cma_endpoint">Method</label>
+                        <span><b>GET</b></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+</div>

@@ -1,0 +1,5 @@
+<div class="chart-container" >
+    <canvas baseChart #graph *ngIf="linear1 && show" [type]="'line'" [data]="linear1.lineChartData" [options]="linear1.lineChartOptions"
+        [legend]="true">
+    </canvas>
+</div>

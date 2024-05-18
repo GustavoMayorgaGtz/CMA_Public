@@ -1,0 +1,240 @@
+<div class="primary-container">
+    <nav>
+        <span class="title">
+            Configuracion de grafica lineal
+        </span>
+        <span class="regresar" (click)="return()">
+            Regresar 
+        </span>
+    </nav>
+    <div class="left">
+        <div class="chart-container" *ngIf="isVisible">
+            <canvas baseChart #graph1 [ngStyle]="obtenerObjeto(graph1)" *ngIf="linear1" [type]="'line'" [data]="linear1.lineChartData" [options]="linear1.lineChartOptions"
+                [legend]="true">
+            </canvas>
+        </div>
+        <div class="description">
+        </div>
+    </div>
+    <div class="right">
+        <div class="content-create-tool">
+            <div class="class-configuration">
+                <div class="title">
+                    General
+                </div>
+                <div class="line">
+
+                </div>
+                <div class="updown">
+                    <img src="./assets/expand_more.png" class="open">
+                </div>
+            </div>
+            <div class="container-class">
+                <div class="campo">
+                    <div class="title">Titulo</div>
+                    <div class="description">Asigna el titulo de la grafica.</div>
+                    <input type="text" class="input-text" name="title" id="title" #title
+                        (change)="setTitle = title.value" (keyup)="setTitle = title.value" value="Linear">
+                </div>
+                <div class="campo">
+                    <div class="title">Descripcion</div>
+                    <div class="description">Describe el uso de la grafica.</div>
+                    <input type="text" class="input-text" name="description" id="description" #description
+                        (change)="setDescription = description.value" value="Descripción basica de una grafica lineal">
+                </div>
+                <div class="campo">
+                    <div class="title">Variable</div>
+                    <div class="description">Elige el valor a graficar.</div>
+                    <!-- En esta parte creamos las 2 opciones, disponibles y el contenedor -->
+                    <div class="menu">
+                        <div class="option">Json Endpoint</div>
+                        <div class="option">Modbus</div>
+                        <div class="option">Memoria</div>
+                        <div class="option">Endpoint</div>
+                    </div>
+                    <div class="content-variables">
+                        <div class="json_variables_container">
+                            <div class="name" *ngFor="let json of jsonVariables; let id = index" (click)="selectVariableToGraph(json.idjsonvar, 1)"> {{json.name}}</div>
+                        </div>
+                        <div class="modbus_variables_container">
+                            <div class="name" *ngFor="let modbus of modbusVariables" (click)="selectVariableToGraph(modbus.idmodbusvar, 2)"> {{modbus.name}}</div>
+                        </div>
+                        <div class="memory_variables_container">
+                            <div class="name" *ngFor="let memory of memoryVariables" (click)="selectVariableToGraph(memory.idmemoryvar, 3)"> {{memory.name}}</div>
+                        </div>
+                        <div class="endpoint_variables_container">
+                            <div class="name" *ngFor="let endpoint of endpointVariables" (click)="selectVariableToGraph(endpoint.id_endpoint, 4)"> {{endpoint.name}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="campo">
+                    <div class="title">Polling</div>
+                    <div class="description">Tiempo de refresco del dato.</div>
+                    <div class="content-polling">
+                        <input type="number" class="input-text" #polling_time
+                            (change)="setPolling_Time = polling_time.value"
+                            (keyup)="setPolling_Time = polling_time.value" name="polling_time" id="polling_time" value="10">
+                        <select name="polling_type" id="polling_type" #polling_type
+                            (change)="setPolling_Type = polling_type.value">
+                            <option disabled>Tipo de tiempo</option>
+                            <option value="sg" selected>Segundos</option>
+                            <option value="mn">Minutos</option>
+                            <option value="hr">Horas</option>
+                        </select>
+                    </div>
+
+                </div>
+                <div class="campo boolean-campo">
+                    <div class="content-information">
+                        <div class="title">Definir como arreglo</div>
+                        <div class="description">La variable manda un arreglo como dato de entrada</div>
+                    </div>
+                    <input type="checkbox" class="input-text" #isArray (change)="set_isArray = isArray.checked"
+                        (keyup)="set_isArray = isArray.checked" name="isArray" id="isArray" disabled>
+                </div>
+                <div class="campo boolean-campo">
+                    <div class="content-information">
+                        <div class="title">Guardar datos en un espacio virtual</div>
+                        <div class="description">Los datos van a guardarse para posteriormente ser analizados o graficados.</div>
+                    </div>
+                    <input type="checkbox" class="input-text" #isSaveBlobData (change)="set_isSaveBlobData = isSaveBlobData.checked"
+                        (keyup)="set_isSaveBlobData = isSaveBlobData.checked" name="isSaveBlobData" id="isSaveBlobData">
+                </div>
+                <div class="campo boolean-campo ">
+                    <div class="content-information">
+                        <div class="title">Ir por pasos</div>
+                        <div class="description">Muestra en una grafica angulos de 90 grados.</div>
+                    </div>
+                    <input type="checkbox" class="input-text" #line_stepped
+                        (change)="setLine_Stepped=line_stepped.checked" (keyup)="setLine_Stepped=line_stepped.checked"
+                        name="line_stepped" id="line_stepped">
+                </div>
+                <div class="campo">
+                    <div class="title">Numero de muestreo</div>
+                    <div class="description">Escoge el dato maximo de muestreo para la grafica.</div>
+                    <input type="number" class="input-text" #sampling_number
+                        (change)="setSampling_number = sampling_number.value" name="sampling_number"
+                        id="sampling_number" value={{getsampling_number}}>
+                </div>
+            </div>
+            <div class="class-configuration">
+                <div class="title">
+                    Estilos
+                </div>
+                <div class="line">
+
+                </div>
+                <div class="updown">
+                    <img src="./assets/expand_more.png" class="open">
+                </div>
+            </div>
+            <div class="container-class ">
+                <div class="campo boolean-campo ">
+                    <div class="content-information">
+                        <div class="title">Definir fondo</div>
+                        <div class="description">Define si la grafica tenga un area de color.</div>
+                    </div>
+                    <input type="checkbox" class="input-text" #fill (change)="setFill = fill.checked"
+                        (keyup)="setFill = fill.checked" name="fill" id="fill" checked>
+                </div>
+                <div class="campo boolean-campo ">
+                    <div class="content-information">
+                        <div class="title">Color de fondo</div>
+                        <div class="description">Define el color del area.</div>
+                    </div>
+                    <div class="content-color">
+                        <input type="color" value="#33556F" class="input-color" name="fill_color" id="fill_color"
+                            #fill_color (change)="setFill_Color = fill_color.value"
+                            (keyup)="setFill_Color = fill_color.value"> 
+                    </div>
+                </div>
+                <div class="campo boolean-campo">
+                    <div class="content-information">
+                        <div class="title">Linea conectora</div>
+                        <div class="description">Graficar una linea conectora.</div>
+                    </div>
+                    <input type="checkbox" class="input-text" name="line" id="line" #line
+                        (change)="setLine = line.checked" (keyup)="setFill = fill.checked" value="2" checked>
+                </div>
+                <div class="campo boolean-campo">
+                    <div class="content-information">
+                        <div class="title">Color de la linea conectora</div>
+                        <div class="description">Define el color de la linea conectora.</div>
+                    </div>
+                    <div class="content-color">
+                        <input type="color" class="input-color" name="line_color" id="line_color" #line_color
+                            (change)="setLine_Color = line_color.value" (keyup)="setLine_Color = line_color.value" value="#000000">
+                    </div>
+                </div>
+                <div class="campo">
+                    <div class="title">Tension de la linea conectora</div>
+                    <div class="description">Define la tension de 0 a 1 de la linea conectora.</div>
+                    <input type="number" class="input-text" #line_tension
+                        (change)="setLine_Tension = line_tension.value" (keyup)="setLine_Tension = line_tension.value"
+                        name="line_tension" id="line_tension" value={{getLine_Tension}}>
+                </div>
+                <div class="campo">
+                    <div class="title">Tamaño del punto</div>
+                    <div class="description">Define el tamaño del punto conector.</div>
+                    <input type="number" class="input-text" #point_width (change)="setPoint_Width = point_width.value"
+                        (keyup)="setPoint_Width = point_width.value" name="point_width" id="point_width" value="2">
+                </div>
+                <div class="campo boolean-campo">
+                    <div class="content-information">
+                        <div class="title">Color del punto</div>
+                        <div class="description">Define el color del punto conector.</div>
+                    </div>
+                    <div class="content-color">
+                        <input type="color" value="#33556F" class="input-color" #point_color
+                            (change)="setPoint_Color = point_color.value" (keyup)="setPoint_Color = point_color.value"
+                            id="input-point_color" name="point_color">
+                    </div>
+                </div>
+                <div class="campo">
+                    <div class="title">Estilo del punto</div>
+                    <div class="description">Define el estilo del punto conector.</div>
+                    <select name="point_style" id="point_style" #point_style
+                        (change)="setPoint_Style = point_style.value">
+                        <option disabled>Selecciona estilo</option>
+                        <option select>circle</option>
+                        <option>cross</option>
+                        <option>crossRot</option>
+                        <option>dash</option>
+                        <option>line</option>
+                        <option>rect</option>
+                        <option>rectRounded</option>
+                        <option>rectRot</option>
+                        <option>start</option>
+                        <option>triangle</option>
+                    </select>
+                </div>
+                <div class="campo">
+                    <div class="title">Tamaño del borde del punto</div>
+                    <div class="description">Define el tamaño del borde del punto conector.</div>
+                    <input type="number" class="input-text" #point_border_size
+                        (keyup)="setPoint_Border_Size = point_border_size.value"
+                        (change)="setPoint_Border_Size = point_border_size.value" name="point_border_size"
+                        id="point_border_size" value="2">
+                </div>
+
+                <div class="campo boolean-campo">
+                    <div class="content-information">
+                        <div class="title">Color del borde punto</div>
+                        <div class="description">Define el color del borde del punto conector.</div>
+                    </div>
+                    <div class="content-color">
+                        <input type="color" value="#ffffff" class="input-color" #point_border_color
+                            (change)="setPoint_Border_Color = point_border_color.value"
+                            (keyup)="setPoint_Border_Color = point_border_color.value" name="point_border_color"
+                            id="point_border_color">
+                    </div>
+                </div>
+                <div class="btn-guardar-grafica" (click)="saveConfiguration_Event()" *ngIf="enableSave">
+                    Guardar configuracion
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>

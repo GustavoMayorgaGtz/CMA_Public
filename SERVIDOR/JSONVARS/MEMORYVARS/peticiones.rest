@@ -1,0 +1,14 @@
+POST http://localhost:3000/jsonvars/create
+Content-Type: application/json
+
+{
+    "name": "Segunda peticion"
+  , "url":"https://pokeapi.co/api/v2/pokemon/pikachu"
+  , "method":"GET"
+  , "body_json": [{"key": "name", "value":"Gustavo_Mayorga"}, {"key": "password", "value":"1502"}]
+  , "token_bearer":""
+  , "key_json":"llave"
+  , "father_keys_json_array":["1","abilities"]
+  , "time_reload_number":0
+  , "time_reload_type":"segundos"
+}

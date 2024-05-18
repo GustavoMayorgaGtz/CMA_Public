@@ -1,0 +1,210 @@
+.chart-container {
+    width: 100%;
+    min-height: 50vh;
+    height: 60vh;
+    overflow: hidden;
+    border-radius: 10px;
+    padding: 10px;
+    background-color: white;
+    border: 1px solid rgb(218, 218, 218);
+    margin-top: 50px;
+
+}
+
+.primary {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgb(236, 236, 236);
+    border: 1px solid rgb(218, 218, 218);
+    padding: 20px 50px;
+    width: 100vw;
+    box-sizing: border-box;
+    // height: 100vh;
+    overflow: hidden;
+    overflow-y: scroll;
+    position: relative;
+
+
+    nav {
+        display: flex;
+        background-color: white;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        width: 100vw;
+        height: 50px;
+        border-bottom: 1px solid rgb(175, 175, 175);
+
+        .btn-regresar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0px 20px;
+            height: 100%;
+
+            &:hover {
+                text-decoration: underline;
+                font-weight: bold;
+                cursor: pointer;
+            }
+        }
+
+        .title {
+            margin: auto;
+        }
+    }
+
+    .information {
+        width: 100%;
+        overflow: hidden;
+        border-radius: 10px;
+        padding: 10px;
+        background-color: white;
+        border: 1px solid rgb(218, 218, 218);
+        margin-top: 10px;
+        display: grid;
+        grid-template-columns: 30% 70%;
+
+        .information-table{
+            box-sizing: border-box;
+            padding: 10px 20px;
+            margin:10px 0px;
+            border-radius: 5px;
+            border: 1px solid black;
+            width: 100%; 
+            background-color: rgb(226, 226, 226);
+
+            .info-ico{
+                width: 20px;
+                height: 20px;
+            }
+        }
+
+        table {
+            grid-column: 1;
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 200px;
+            border: 1px solid black;
+
+            .head {
+                background-color: rgb(210, 210, 210);
+                padding: 10px;
+            }
+
+            td {
+                padding: 10px;
+                border: 1px solid black;
+            }
+
+            .columna {
+                padding: 10px;
+                text-align: center;
+            }
+        }
+
+       
+            .menu {
+                grid-column: 2;
+                margin: 10px 50px;
+                border-radius: 20px;
+                padding: 5px 20px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                box-sizing: border-box;
+                background-color: rgb(226, 226, 226);
+                height: 80vh;
+                left: 50px;
+                .title{
+                    font-weight: bold;
+                }
+
+                .line{
+                    width: 100%;
+                    height: 1px;
+                    background-color: rgb(154, 154, 154);
+                    margin: 20px 0px;
+                }
+                .campo{
+                    width: 100%;
+                    .subtitle{
+                        font-weight: bold;
+                    }
+                    .content{
+                        width: 100%;
+                        font-size: calc(0.6vw + 8px);
+
+                        .input-muestreo{
+                            display: grid;
+                            grid-template-rows: 1fr 1fr;
+                            width: 100%;
+                            input{
+                                grid-row: 1;
+                            }
+                            .bottom{
+                                display: flex;
+                                justify-content: space-between;
+                                grid-row: 2;
+
+                                .min, .max{
+                                    font-size: calc(0.6vw + 6px);
+                                    font-weight: bold;
+                                }
+
+                                .center{
+                                    font-size: calc(0.6vw + 6px);
+                                    font-weight: bold;
+                                    color: green;
+                                }
+
+                            }
+                        }
+
+                        .input-groupby{
+                            width: 100%;
+                            display: grid;
+                            grid-template-rows: 1fr 1fr;
+
+                            .top{
+                                grid-row: 1;
+                                width: 100%;
+                            }
+
+                            .bottom{
+                                display: flex;
+                                .option{
+                                    display: flex;
+                                    justify-content: center;
+                                    font-size: calc(0.6vw + 6px);
+                                    align-items: center;
+                                    width: 100%;
+                                    height: 35px;
+                                    border:1px solid rgba(0, 0, 0, 0.216);
+                                    cursor: pointer;
+                                    transition: all 0.2s;
+
+                                    &:hover{
+                                        transition: all 0.5s;
+                                        transform: scale(1.01);
+                                        background-color: rgba(255, 255, 255, 0.619);
+                                    }
+                                }
+
+                                .option-mark{
+                                    @extend .option;
+                                    background-color: rgb(60, 105, 173);
+                                    color: white;
+                                    &:hover{
+                                        transform: scale(1);
+                                        background-color: rgb(60, 105, 173);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+    }
+}

@@ -1,0 +1,76 @@
+.container-menu{
+    padding-top: 10px;
+    box-sizing: border-box;
+    position: relative;
+    width: 230px;
+    height: calc(100vh - 85px );
+    background-color: #fafafa;
+    border-right: 1px solid rgb(182, 182, 182);
+    .separador
+    {
+        padding: 5px 5px;
+        width:100%;
+        box-sizing: border-box;
+        overflow: hidden;
+        .title{
+            
+                margin:0px 0px 10px 0px;
+                font-weight: bold;
+                font-size: 0.9em;
+            
+        }
+        .line{
+            width: 100%;
+            height: 1px;
+            background-color: rgb(133, 133, 133);
+        }
+    }
+
+    .options{
+        padding: 5px 5px;
+        width:100%;
+        box-sizing: border-box;
+        overflow: hidden;
+        height: 35px;
+        margin-bottom: 10px;
+        display: grid;
+        grid-template-columns: 1fr 3fr;
+        cursor: pointer;
+        &:hover{
+          background-color: rgb(230, 230, 230);
+        }
+
+        .icon{
+            grid-column: 1;
+            width: 100%;
+            height: 25px;
+            // background-color: red;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            img{
+                filter: invert(0.2);
+                width: 25px;
+                height: 100%;
+            }
+        }
+        .title{
+            // background-color: blue;
+            grid-column: 2;
+            width: 100%;
+            height: 25px;
+            display: flex;
+            align-items: center;
+            font-size: 0.90em;
+            color: rgb(62, 62, 62);
+        }
+    }
+
+    .derechos{
+        position: absolute;
+        bottom: 10px;
+        left: 10px;
+        font-size: 0.7em;
+        color: rgb(80, 80, 80);
+    }
+}

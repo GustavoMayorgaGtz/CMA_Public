@@ -1,0 +1,96 @@
+<main>   
+    <section class="formulario">
+        <div class="container-icon">
+            <img src="./assets/" alt="" class="icon">
+        </div>
+        <!--------------------------------->
+        <form *ngIf="isLogin" [formGroup]="loginGroup">
+            <div class="form-title">Inicio de sesión</div>
+            <div class="form-description">Inicia sesión para empezar a organizar tu inventario</div>
+            <div class="bloque-entrada">
+                <label for="inpt-title">Nombre de usuario</label>
+                <input type="text" name="username" id="username" autocomplete="off" placeholder="example@example.com" formControlName="nombre_usuario">
+            </div>
+            <div class="bloque-entrada">
+                <label for="inpt-title">Contraseña</label>
+                <input type="password" name="password" id="password" autocomplete="off" placeholder="Password" formControlName="password">
+            </div>
+            <div class="bloque-general">
+                <div class="container-recordar">
+                    <input type="checkbox" name="recordar" id="recordar">
+                    <label for="recordar">Recordarme</label>
+                </div>
+                <div class="container-forgeinpassword">
+                    ¿Olvidaste tu contraseña?
+                </div>
+            </div>
+            <div class="btn-login" >
+                <span class="back">Comenzar!</span>
+                <div class="front">Iniciar sesión</div>
+                <div class="focus" (click)="loggear()"></div>
+            </div>
+
+            <div class="register" (click)="changeLogin_Status()">
+                ¿No tienes una cuenta? <span>Crea una cuenta</span>
+            </div>
+        </form>
+        <!--------------------------------->
+        <form *ngIf="!isLogin" [formGroup]="registerGroup">
+            <div class="form-title">Registrar usuario</div>
+            <div class="bloque-entrada">
+                <label for="username">Nombre de usuario</label>
+                <input type="text" name="username" id="username" autocomplete="off" placeholder="Gustavo_Mayorga" formControlName="nombre_usuario">
+            </div>
+            <div class="bloque-entrada">
+                <label for="password">Contraseña</label>
+                <input type="password" name="password" id="password" autocomplete="off" placeholder="Password" formControlName="password">
+            </div>
+            <div class="bloque-entrada">
+                <label for="email">Correo electronico</label>
+                <input type="text" name="email" id="email" autocomplete="off" placeholder="awesome@example.com" formControlName="correo">
+            </div>
+            <div class="bloque-entrada">
+                <label for="name">Telefono</label>
+                <input type="text" name="name" id="name" autocomplete="off" placeholder="" formControlName="telefono">
+            </div>
+            <div class="btn-login" *ngIf="isLoadingRegister">
+                <span class="back">Bienvenido!</span>
+                <div class="front">Registrar usuario</div>
+                <div class="focus" (click)="register()"></div>
+            </div>
+            <div class="register" (click)="changeLogin_Status()">
+                Iniciar sesion
+            </div>
+        </form>
+        <!--------------------------------->
+        <span class="derechos">CMA 2023. Todos los derechos reservados</span>
+    </section>
+    <section class="informacion">
+        <!-- <div class="gear">
+            <img src="./assets/design/gear.svg" alt="decoracion">
+        </div>  -->
+        <div class="decoration2">
+            <img src="./assets/design/cuadros.png" alt="decoracion">
+        </div>
+        <div class="decoration1">
+            <img src="./assets/design/PatronCirculos.png" alt="decoracion">
+        </div>
+        <div class="decoration3">
+            <img src="./assets/design/patronCirculos2.png" alt="decoracion">
+        </div>
+        <!-- <div class="contenedor-title">
+             <img src="./assets/Imagenes/login_image.jpeg" class="icono-mano" alt="mano"> 
+        </div>-->
+        <div class="contenedor-informacion">
+            <span class="title">CMA WEB SCADA SYSTEM</span>
+            <span class="subtitle">Control, Monitoreo y Alertado</span>
+            <!-- <span style="font-weight: bold; color: #607328;">CMA WEB SCADA SYSTEM</span> es un sistema <span style="font-weight: bold; color: orange;">SCADA</span> que utiliza tecnologías web para abordar las necesidades de monitoreo, alerta y control de dispositivos en red en entornos industriales, comerciales y privados. Su capacidad de implementación en producción lo hace especialmente adecuado para su aplicación en plantas industriales y otros sectores. -->
+            <!-- <img src="./assets/Imagenes/information1.png" *ngIf="showInformationMenu === 1">
+            <img src="./assets/Imagenes/information2.png" *ngIf="showInformationMenu === 2">
+            <img src="./assets/Imagenes/information3.png" *ngIf="showInformationMenu === 3">
+            <img src="./assets/Imagenes/information4.png" *ngIf="showInformationMenu === 4">
+            <img src="./assets/Imagenes/information5.png" *ngIf="showInformationMenu === 5">
+            <img src="./assets/Imagenes/information6.png" *ngIf="showInformationMenu === 6"> -->
+        </div>
+    </section>
+</main>

@@ -1,0 +1,16 @@
+<div class="container-primary">
+    <app-nav></app-nav>
+    <div class="title-header"> Dashboard</div>
+    <div class="main">
+        <app-menu (option)="setOptionEnable($event)">  </app-menu>
+        <div class="container-pages">
+           <app-autentificacion *ngIf="optionEnable === 1"></app-autentificacion>
+           <app-cuenta *ngIf="optionEnable === 2"></app-cuenta>
+           <app-dashboard *ngIf="optionEnable === 3" ></app-dashboard>
+           <app-funciones *ngIf="optionEnable === 4" ></app-funciones>
+           <app-variables *ngIf="optionEnable === 5" ></app-variables>
+        </div>
+    </div>
+</div>
+<!-- <app-configure-linear-graph></app-configure-linear-graph> -->
+<!-- <app-configure-simple-button></app-configure-simple-button> -->

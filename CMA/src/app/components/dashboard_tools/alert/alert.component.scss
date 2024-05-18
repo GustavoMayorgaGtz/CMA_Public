@@ -1,0 +1,40 @@
+.content-alert {
+    width: 200px;
+    height: 200px;
+    overflow: hidden;
+    position: relative;
+
+    .line {
+        position: absolute;
+        width: 2px;
+        height: 100%;
+        background-color: black;
+        bottom: 2px;
+        left: 10px;
+
+        .limit {
+            position: absolute;
+            top: 50px;
+            left: 5px;
+            width: 100px;
+            height: 3px;
+            background-color: red;
+            margin: 5px;
+            font-size: calc(0.3vw + 8px);
+        }
+
+        .bar {
+            position: absolute;
+            bottom: 0px;
+            left: 45px;
+            width: 50px;
+            height: 120px;
+            font-size: calc(0.3vw + 8px); 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            background-color: rgb(51, 85, 111);
+        }
+    }
+}

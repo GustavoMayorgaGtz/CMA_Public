@@ -1,0 +1,25 @@
+<div class="container-primary">
+
+    <div class="tieldmap" #tieldmap (mousemove)="getPosition($event, tieldmap)" (mouseleave)="endAllEvents()"
+        (mouseup)="endAllEvents()">
+        <!-- <span class="Loading" style="margin: auto; display:flex; justify-content: center; align-items: center; width: 100%; height: 100%;"> Cargando...</span> -->
+        <span class="Loading" style="margin: auto; display:flex; justify-content: center; align-items: center; width: 100%; height: 100%;" *ngIf="shadow_container.length === 0"> No hay herramientas creadas.</span>
+        <div class="shadow" *ngFor="let shadow of shadow_container; let idShadow = index;" #shadow_container
+            [ngStyle]="setChanges(shadow_container, idShadow, tieldmap)">
+            <app-line-chart *ngIf="shadow.type === 'linechart'" [idlinechart]=shadow.id></app-line-chart>
+            <app-simple-button *ngIf="shadow.type === 'simplebutton'" [idSimpleButton]=shadow.id></app-simple-button>
+            <div class="opendata" *ngIf="shadow.type === 'linechart'" (click)="openData(shadow.id)">
+                <img src="./assets/abrir.svg">
+            </div>
+            <div class="erased" (click)="erasedShadow(idShadow)">
+                <img src="./assets/x-makeme.svg" draggable="false">
+            </div>
+            <div class="resize" (mousedown)="enableResizeShadow(idShadow)" (mouseup)="endResizeShadow()">
+                <img src="./assets/resize-makeme.svg" draggable="false">
+            </div>
+            <div class="move" (mousedown)="enableMoveShadow(idShadow)" (mouseup)="endMoveShadow()">
+                <img src="./assets/move-makeme.svg" draggable="false">
+            </div>
+        </div>
+    </div>
+</div>

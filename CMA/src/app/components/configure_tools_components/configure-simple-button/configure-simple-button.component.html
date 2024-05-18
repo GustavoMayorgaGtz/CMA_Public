@@ -1,0 +1,116 @@
+<div class="primary-container">
+    <nav>
+        <span class="title">
+            Configuracion de boton simple
+        </span>
+        <span class="regresar" (click)="return()">
+            Regresar 
+        </span>
+    </nav>
+    <div class="left">
+        <div class="chart-container" (click)="clickEvent()">
+            <div class="content-button" #button>
+                <div class="focus">
+                    <span class="title">
+                        {{getTitle}}
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="description">
+        </div>
+    </div>
+    <div class="right">
+        <div class="content-create-tool">
+            <div class="class-configuration">
+                <div class="title">
+                    General
+                </div>
+                <div class="line">
+
+                </div>
+                <div class="updown">
+                    <img src="./assets/expand_more.png" class="open">
+                </div>
+            </div>
+            <div class="container-class">
+                <div class="campo">
+                    <div class="title">Titulo</div>
+                    <div class="description">Asigna el texto al boton simple.</div>
+                    <input type="text" class="input-text" name="title" id="title" #title
+                        (change)="setTitle = title.value" (keyup)="setTitle = title.value" value={{getTitle}}>
+                </div>
+                <div class="campo">
+                    <div class="title">Descripcion</div>
+                    <div class="description">Describe el uso del boton simple.</div>
+                    <input type="text" class="input-text" name="description" id="description" #description
+                        (change)="setDescription = description.value" value="Descripcion de un boton simple">
+                </div>
+                <div class="campo">
+                    <div class="title">Variable</div>
+                    <div class="description">Elige la peticion del click.</div>
+                    <!-- En esta parte creamos las 2 opciones, disponibles y el contenedor -->
+                    <div class="menu">
+                        <div class="option">Json Endpoint</div>
+                        <!-- <div class="option">Modbus</div> -->
+                    </div>
+                    <div class="content-variables">
+                        <div class="json_variables_container">
+                            <div class="name" *ngFor="let json of jsonVariables; let id = index" (click)="selectVariableToGraph(json.idjsonvar, 1, id)"> {{json.name}}</div>
+                        </div>
+                        <!-- <div class="modbus_variables_container">
+                            <div class="name" *ngFor="let modbus of modbusVariables; let id = index" (click)="selectVariableToGraph(modbus.idmodbusvar, 2, id)"> {{modbus.name}}</div>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+            <div class="class-configuration">
+                <div class="title">
+                    Estilos
+                </div>
+                <div class="line">
+                </div>
+                <div class="updown">
+                    <img src="./assets/expand_more.png" class="open">
+                </div>
+            </div>
+            <div class="container-class ">
+                <div class="campo boolean-campo ">
+                    <div class="content-information">
+                        <div class="title">Color de fondo</div>
+                        <div class="description">Define el color del area.</div>
+                    </div>
+                    <div class="content-color">
+                        <input type="color" value="#33556F" class="input-color" name="fill_color" id="fill_color"
+                            #fill_color (change)="setFill_Color(fill_color.value, button)"
+                            (keyup)="setFill_Color(fill_color.value, button)"> 
+                    </div>
+                </div>
+                <div class="campo boolean-campo ">
+                    <div class="content-information">
+                        <div class="title">Color de texto</div>
+                        <div class="description">Define el color del texto.</div>
+                    </div>
+                    <div class="content-color">
+                        <input type="color" value="#00000" class="input-color" name="fill_color" id="fill_color"
+                        #text_color (change)="setText_Color(text_color.value, button)"
+                            (keyup)="setText_Color(text_color.value, button)"> 
+                    </div>
+                </div>
+                <div class="campo">
+                    <div class="title">Estilo del boton</div>
+                    <div class="description">Define el estilo del boton simple.</div>
+                    <select #button_style
+                        (change)="setStyle_Button(button_style.value, button)">
+                        <option disabled>Selecciona estilo</option>
+                        <option select value="normal">normal</option>
+                        <option value="circle">circle</option>
+                    </select>
+                </div>
+                <div class="btn-guardar" (click)="saveConfiguration_Event()">
+                    Guardar configuracion
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

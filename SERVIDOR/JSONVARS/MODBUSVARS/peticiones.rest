@@ -1,0 +1,7 @@
+POST https://servidor-controler.com.mx/ordencompra/pushData
+Content-Type: application/json
+
+{
+    
+    "date": "hoy"
+}
